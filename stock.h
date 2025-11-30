@@ -8,10 +8,8 @@ class stock{
         double B_price;
     public:
         stock(string n, double p):name(n),B_price(p){}
-        string getName() const;
-        double getPrice() const;
+        string getName() const{return name;};
+        double getPrice() const{return B_price;};
 
 };
-string stock::getName() const{return name;}
-double stock::getPrice() const{return B_price;}
 #endif
