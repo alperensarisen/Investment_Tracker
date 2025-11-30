@@ -24,9 +24,12 @@ int main(){
     else cout<<"There is some problem\n";
     LinkedList ObList;
     ObList += tesla;
+    cout<<"########################\n";
     cout<<"Operator + test: \n";
     LinkedList trial;
     trial = ObList+myFav;
     trial.printList();
+    cout<<"########################\n";
+    cout<<trial;
     return 0;
 }

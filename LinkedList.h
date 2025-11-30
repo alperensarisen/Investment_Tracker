@@ -1,6 +1,7 @@
 #ifndef LINKEDLIST_H_
 #define LINKEDLIST_H_
 #include "stock.h"
+#include <iosfwd>
 struct node
 {
     stock data;
@@ -26,5 +27,6 @@ class LinkedList{
         LinkedList &operator+=(const node & rhs);
         LinkedList operator+(const LinkedList & rhs) const;
         bool operator==(const LinkedList &rhs) const;
+        friend ostream &operator<<(ostream &out, const LinkedList & list);
 };
 #endif

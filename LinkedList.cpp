@@ -82,3 +82,12 @@ bool LinkedList::operator==(const LinkedList & rhs)const{
     }
     return (temp == nullptr && temp2 == nullptr);
 }
+ostream& operator<<(ostream &out,const LinkedList &list){
+    if(!list.head) return out<<"Empty!\n";
+    node *temp = list.head;
+    while(temp){
+        out<<"Name: "<<temp->data.getName()<<"| Price: "<<temp->data.getPrice()<<endl;
+        temp = temp->next;
+    }
+    return out;
+}
