@@ -18,6 +18,10 @@ int main(){
     myFav = myCart;
     cout<<"MYFAV:\n";
     myFav.printList();
+    if(myCart == myFav){
+        cout<<"== operator is working\n";
+    }
+    else cout<<"There is some problem\n";
     LinkedList ObList;
     ObList += tesla;
     cout<<"Operator + test: \n";

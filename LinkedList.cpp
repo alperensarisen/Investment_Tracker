@@ -11,6 +11,7 @@ void LinkedList::copyFrom(const LinkedList & other){
     clear();
     if(!other.head) return;
     head = new node(other.head->data,nullptr);
+    size = 1;
     node* temp = other.head->next;
     node* nh = head;
     while(temp){
@@ -67,4 +68,17 @@ LinkedList LinkedList::operator+(const LinkedList &rhs) const{
         temp = temp->next;
     }
     return result;
+}
+bool LinkedList::operator==(const LinkedList & rhs)const{
+    if(this->size != rhs.size){return false;}
+    node* temp = head;
+    node* temp2 = rhs.head;
+    while(temp && temp2){
+        if(temp->data.getName() != temp2->data.getName() || temp->data.getPrice() != temp2->data.getPrice()){
+            return false;
+        }
+        temp = temp->next;
+        temp2 = temp2->next;
+    }
+    return (temp == nullptr && temp2 == nullptr);
 }

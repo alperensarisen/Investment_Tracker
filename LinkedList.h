@@ -25,5 +25,6 @@ class LinkedList{
         LinkedList &operator=(const LinkedList & rhs);
         LinkedList &operator+=(const node & rhs);
         LinkedList operator+(const LinkedList & rhs) const;
+        bool operator==(const LinkedList &rhs) const;
 };
 #endif
