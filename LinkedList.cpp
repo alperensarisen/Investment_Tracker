@@ -49,6 +49,7 @@ LinkedList &LinkedList::operator+=(const node & rhs){
     if(!head){
         head = new node(rhs.data,nullptr);
         size = 1;
+        return *this;
     }
     node* temp = head;
     while(temp->next){
