@@ -11,6 +11,7 @@ string LinkedList::getListName() const{
 }
 void LinkedList::copyFrom(const LinkedList & other){
     clear();
+    this->listName = other.listName;
     if(!other.head) return;
     head = new node(other.head->data,nullptr);
     size = 1;
@@ -22,9 +23,9 @@ void LinkedList::copyFrom(const LinkedList & other){
         nh = nh->next;
         temp = temp->next;
     }
+   
 }
 void LinkedList::clear(){
-    if(!head) return;
     node* temp = head;
     while(temp){
         node* nxt = temp->next;
