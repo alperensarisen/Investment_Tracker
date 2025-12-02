@@ -12,13 +12,14 @@ class LinkedList{
     private:
         
         node *head;
+        string listName;
         int size;
     public:
-        LinkedList():head(nullptr),size(0){}   //Default constructor
+        LinkedList(string n):head(nullptr),size(0),listName(n){}   //Default constructor
         LinkedList(node *h, int s):head(h),size(s){}
         LinkedList(const LinkedList & other);
         ~LinkedList();
-
+        string getListName() const;
         void copyFrom(const LinkedList &other);
         void clear();
         void printList() const;

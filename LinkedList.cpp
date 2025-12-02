@@ -6,7 +6,9 @@ LinkedList::LinkedList(const LinkedList & other){
     copyFrom(other);
 }
 LinkedList::~LinkedList(){clear();}
-
+string LinkedList::getListName() const{
+    return listName;
+}
 void LinkedList::copyFrom(const LinkedList & other){
     clear();
     if(!other.head) return;
