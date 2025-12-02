@@ -92,7 +92,7 @@ ostream& operator<<(ostream &out,const LinkedList &list){
     node *temp = list.head;
     cout<<list.getListName()<<": ";
     while(temp){
-        out<<"[Name: "<<temp->data.getName()<<" | Price: "<<temp->data.getPrice()<<"] ";
+        out<<"[Name: "<<temp->data.getName()<<" | Price: $"<<temp->data.getPrice()<<"] ";
         temp = temp->next;
     }
     cout<<endl;
