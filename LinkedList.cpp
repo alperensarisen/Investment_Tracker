@@ -2,7 +2,7 @@
 #include "LinkedList.h"
 using namespace std;
 
-LinkedList::LinkedList(const LinkedList & other){
+LinkedList::LinkedList(const LinkedList & other):listName(""){
     copyFrom(other);
 }
 LinkedList::~LinkedList(){clear();}
@@ -10,8 +10,10 @@ string LinkedList::getListName() const{
     return listName;
 }
 void LinkedList::copyFrom(const LinkedList & other){
-    clear();
-    this->listName = other.listName;
+    //clear();
+    listName = other.listName;
+    head = nullptr;
+    size = 0;
     if(!other.head) return;
     head = new node(other.head->data,nullptr);
     size = 1;
@@ -88,9 +90,11 @@ bool LinkedList::operator==(const LinkedList & rhs)const{
 ostream& operator<<(ostream &out,const LinkedList &list){
     if(!list.head) return out<<"Empty!\n";
     node *temp = list.head;
+    cout<<list.getListName()<<": ";
     while(temp){
-        out<<"Name: "<<temp->data.getName()<<"| Price: "<<temp->data.getPrice()<<endl;
+        out<<"[Name: "<<temp->data.getName()<<" | Price: "<<temp->data.getPrice()<<"] ";
         temp = temp->next;
     }
+    cout<<endl;
     return out;
 }

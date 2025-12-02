@@ -2,19 +2,64 @@
 #include <string>
 #include "LinkedList.h"
 #include <vector>
-
+//#include <limits>
 
 using namespace std;
+#include <iostream>
+#include <string>
+#include <vector>
+#include <limits>
+#include "LinkedList.h"
+
+using namespace std;
+void manageList(vector<LinkedList> & lists){
+    int ch;
+    for(int i = 0; i<lists.size();i++){
+        cout<<i+1<<". "<<lists[i].getListName()<<endl;
+    }
+    while(true){
+        cout<<"Choose list: ";
+        if(!(cin >> ch)|| ch > lists.size()){
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Invalid input.\n";
+            continue;
+        }
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        string stockName;
+        double stockPrice;
+        cout<<"Enter stock name: ";
+        cin >> stockName;
+        cout<<"Enter buy price: ";
+        cin >> stockPrice;
+        stock s(stockName,stockPrice);
+        lists[ch] += s;
+        cout<<"##################\n";
+        cout<<lists[ch];
+    }
+}
 int main() {
     vector<LinkedList> lists;
     int choice;
 
-    while(true){
-        
-        cin >> choice;
-        cin.ignore(numeric_limits<streamsize>::max(), '\n'); // buffer temizle
+    while (true) {
+        cout << "\n------ MENU ------\n";
+        cout << "1. Create new list\n";
+        cout << "2. Menage lists\n";
+        cout << "0. Exit\n";
+        cout << "Choice: ";
 
-        if(choice == 1){
+        if (!(cin >> choice)) {
+            // yanlış girişte programı kurtaralım
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Invalid input.\n";
+            continue;
+        }
+
+        cin.ignore(numeric_limits<streamsize>::max(), '\n'); // \n temizle
+
+        if (choice == 1) {
             string _listName;
             cout << "Enter list name: ";
             getline(cin, _listName);
@@ -24,18 +69,25 @@ int main() {
 
             cout << "New list has been created: " << _listName << "\n";
         }
-        else if(choice == 2){
-            if(lists.empty()){
+        else if (choice == 2) {
+            if (lists.empty()) {
                 cout << "No list exists. Create one first.\n";
                 continue;
             }
-            for(int i = 0; i < lists.size(); i++)
-                cout << i+1 << ". list: " << lists[i].getListName() << endl;
+            manageList(lists);
         }
-        else break;
+        else if (choice == 0) {
+            cout << "Bye!\n";
+            break;
+        }
+        else {
+            cout << "Unknown option.\n";
+        }
     }
+
     return 0;
 }
+
 
     /*
     TODO: Clean main.cpp and start basic UI

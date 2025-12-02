@@ -17,7 +17,7 @@ class LinkedList{
     public:
         LinkedList():head(nullptr),size(0),listName(""){}//Default constructor
         LinkedList(string n):head(nullptr),size(0),listName(n){}   
-        LinkedList(node *h, int s):head(h),size(s){}
+        LinkedList(node *h, int s):head(h),size(s),listName(""){}
         LinkedList(const LinkedList & other);
         ~LinkedList();
         string getListName() const;
