@@ -54,7 +54,6 @@ void manageList(vector<LinkedList> & lists){
             cout<<"Choose element to delete: ";
             cin >> dltElement;
             lists[rmv_list-1].removeAt(dltElement);
-            cout<<"Stock has been deleted\n";
             break;
 
 
@@ -75,6 +74,7 @@ int main() {
         cout << "\n------ MENU ------\n";
         cout << "1. Create new list\n";
         cout << "2. Menage lists\n";
+        cout << "3. Show lists and stocks\n";
         cout << "0. Exit\n";
         cout << "Choice: ";
 
@@ -105,6 +105,11 @@ int main() {
             }
             manageList(lists);
         }
+        else if (choice == 3){
+            for(int i = 0; i<lists.size(); i++){
+                cout<<lists[i];
+            }
+        }
         else if (choice == 0) {
             cout << "Bye!\n";
             break;
@@ -119,14 +124,8 @@ int main() {
 
 
     /*
-    TODO: Clean main.cpp and start basic UI
-    * create list
-        ? list name
-        ? back
-    * add stock
-        ? choose list
-            ! enter name 
-            ! enter price
-        ? back
-    ! FIX BUGS
+    TODO: Check all functions are functional
+    TODO: Save lists datas to database or txt file 
+    TODO: Improve terminal UI
+    TODO: Add quantity to stocks and create user balance
     */

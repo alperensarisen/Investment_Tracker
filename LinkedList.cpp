@@ -68,6 +68,7 @@ void LinkedList::removeAt(int index){
     temp->next = dltd->next;
     delete dltd;
     size--;
+    cout<<"Stock has been deleted\n";
 }
 LinkedList &LinkedList::operator=(const LinkedList & rhs){
     if(this != &rhs){
