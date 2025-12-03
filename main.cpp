@@ -45,7 +45,20 @@ void manageList(vector<LinkedList> & lists){
             cout<<"##################\n";
             cout<<lists[ch-1];
         }
-        else if(menu_ch == 2) cout<<"remove\n";
+        else if(menu_ch == 2){
+            int rmv_list;
+            int dltElement;
+            cout<<"Choose list: ";
+            cin>>rmv_list;
+            cout<<lists[rmv_list-1];
+            cout<<"Choose element to delete: ";
+            cin >> dltElement;
+            lists[rmv_list-1].removeAt(dltElement);
+            cout<<"Stock has been deleted\n";
+            break;
+
+
+        }
         else if(menu_ch == 0) break;
         else{
             cout<<"Invalid choice!\n";

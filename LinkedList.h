@@ -24,10 +24,12 @@ class LinkedList{
         void copyFrom(const LinkedList &other);
         void clear();
         void printList() const;
-        
+        void removeAt(int index); 
+
         LinkedList &operator=(const LinkedList & rhs);
         LinkedList &operator+=(const node & rhs);
         LinkedList operator+(const LinkedList & rhs) const;
+        
         bool operator==(const LinkedList &rhs) const;
         friend ostream &operator<<(ostream &out, const LinkedList & list);
 };

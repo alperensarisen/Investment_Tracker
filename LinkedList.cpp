@@ -44,6 +44,31 @@ void LinkedList::printList() const{
         temp = temp->next;
     }
 }
+void LinkedList::removeAt(int index){
+    if(!head){
+        cout<<"Empty list you cant remove anything\n";
+        return;
+    }
+    if(index < 0 || index >= size){
+        cout<<"Invalid index!\n";
+        return;
+    }
+    if(index == 0){
+        node* dlt = head;
+        head = head->next;
+        delete dlt;
+        size--;
+        return;
+    }
+    node *temp = head;
+    for(int i = 0;i<index-1;i++){
+        temp = temp->next;
+    }
+    node *dltd = temp->next;
+    temp->next = dltd->next;
+    delete dltd;
+    size--;
+}
 LinkedList &LinkedList::operator=(const LinkedList & rhs){
     if(this != &rhs){
         clear();
