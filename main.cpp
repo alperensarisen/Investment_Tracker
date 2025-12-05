@@ -12,6 +12,27 @@ using namespace std;
 #include "LinkedList.h"
 
 using namespace std;
+class person{
+    private:
+        string _name;
+        string _pass;
+        double totalBalance;
+        vector<LinkedList> *_lists;
+    public:
+        person():_name(""),_pass(""),totalBalance(0.0),_lists(nullptr){}
+        person(string n,string p, double b, vector<LinkedList> *l):
+        _name(n),_pass(p),totalBalance(b),_lists(l){}
+
+        string getName() const{return _name;}
+        string getPass() const{return _pass;}
+        double getBalance() const{return totalBalance;}
+
+        void setList(vector<LinkedList> *l){_lists = l;}
+
+        vector<LinkedList> &getList(){return *_lists;}
+
+};
+
 void manageList(vector<LinkedList> & lists){
     int menu_ch;
     for(int i = 0; i<lists.size();i++){
@@ -69,7 +90,25 @@ void manageList(vector<LinkedList> & lists){
 int main() {
     vector<LinkedList> lists;
     int choice;
-
+    person user("jack","1234",0.0,nullptr);
+    string pass, name;
+    while(true){
+        cout<<"##### FINANCE APP #####\n";
+        cout<<"Enter name: ";
+        cin>>name;
+        cout<<"Enter password: ";
+        cin>>pass;
+        
+        if(name != user.getName() || pass != user.getPass()){
+            cout<<"Incorrect informations\n";
+            continue;
+        }
+        
+        vector<LinkedList> *lst = new vector<LinkedList>;
+        user.setList(lst);
+        break;
+        
+    }
     while (true) {
         cout << "\n------ MENU ------\n";
         cout << "1. Create new list\n";
@@ -94,20 +133,20 @@ int main() {
             getline(cin, _listName);
 
             LinkedList newList(_listName);
-            lists.push_back(newList);
+            user.getList().push_back(newList);
 
             cout << "New list has been created: " << _listName << "\n";
         }
         else if (choice == 2) {
-            if (lists.empty()) {
+            if (user.getList().empty()) {
                 cout << "No list exists. Create one first.\n";
                 continue;
             }
-            manageList(lists);
+            manageList(user.getList());
         }
         else if (choice == 3){
-            for(int i = 0; i<lists.size(); i++){
-                cout<<lists[i];
+            for(int i = 0; i<user.getList().size(); i++){
+                cout<<user.getList()[i];
             }
         }
         else if (choice == 0) {
