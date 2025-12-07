@@ -2,6 +2,7 @@
 #include <string>
 #include "LinkedList.h"
 #include <vector>
+#include <fstream>
 //#include <limits>
 
 using namespace std;
@@ -28,7 +29,7 @@ class person{
         double getBalance() const{return totalBalance;}
 
         void setList(vector<LinkedList> *l){_lists = l;}
-
+        bool isValid() const{return !_name.empty() && !_pass.empty();}
         vector<LinkedList> &getList(){return *_lists;}
 
 };
@@ -87,25 +88,58 @@ void manageList(vector<LinkedList> & lists){
         
     }
 }
+void getData(vector<person> &users){
+    ifstream file("database.txt");
+    string _name, _pass;
+    if(!file.is_open()){
+        cout<<"There is a problem about .txt file !\n";
+        return;
+    }
+    while(file >> _name >> _pass){
+        cout<<". ";
+        if(!_name.empty() && !_pass.empty()){
+            person p(_name,_pass,0.0,nullptr);
+            users.push_back(p);
+            #ifdef _DEBUG
+                cout<<"New person: "<<_name<<" | password: "<<_pass<<endl;
+                cout<<"Has been created!\n";
+            #endif
+        }
+        
+    }
+    cout<<endl;
+    file.close();
+}
 int main() {
     vector<LinkedList> lists;
+    vector<person> users;
+    
     int choice;
-    person user("jack","1234",0.0,nullptr);
+    person currentUser;
     string pass, name;
+    getData(users);
     while(true){
         cout<<"##### FINANCE APP #####\n";
         cout<<"Enter name: ";
         cin>>name;
         cout<<"Enter password: ";
         cin>>pass;
-        
-        if(name != user.getName() || pass != user.getPass()){
-            cout<<"Incorrect informations\n";
+        for(int i = 0; i<users.size();i++){
+            if(name == users[i].getName() && pass == users[i].getPass()){
+                currentUser = users[i];
+                #ifdef _DEBUG
+                    cout<<"user with given information found.\n";
+                #endif
+            }
+                
+        }
+        if(!currentUser.isValid()){
+            cout<<"No user found with given informations.\n";
             continue;
         }
         
         vector<LinkedList> *lst = new vector<LinkedList>;
-        user.setList(lst);
+        currentUser.setList(lst);
         break;
         
     }
@@ -133,20 +167,20 @@ int main() {
             getline(cin, _listName);
 
             LinkedList newList(_listName);
-            user.getList().push_back(newList);
+            currentUser.getList().push_back(newList);
 
             cout << "New list has been created: " << _listName << "\n";
         }
         else if (choice == 2) {
-            if (user.getList().empty()) {
+            if (currentUser.getList().empty()) {
                 cout << "No list exists. Create one first.\n";
                 continue;
             }
-            manageList(user.getList());
+            manageList(currentUser.getList());
         }
         else if (choice == 3){
-            for(int i = 0; i<user.getList().size(); i++){
-                cout<<user.getList()[i];
+            for(int i = 0; i<currentUser.getList().size(); i++){
+                cout<<currentUser.getList()[i];
             }
         }
         else if (choice == 0) {
@@ -167,4 +201,6 @@ int main() {
     TODO: Save lists datas to database or txt file 
     TODO: Improve terminal UI
     TODO: Add quantity to stocks and create user balance
+    * Show also user name before printing lists
+    ? Add some important functions into person class
     */
