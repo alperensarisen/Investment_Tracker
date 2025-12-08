@@ -70,6 +70,9 @@ void LinkedList::removeAt(int index){
     size--;
     cout<<"Stock has been deleted\n";
 }
+bool LinkedList::isEmpty() const{
+    return head == nullptr;
+}
 LinkedList &LinkedList::operator=(const LinkedList & rhs){
     if(this != &rhs){
         clear();

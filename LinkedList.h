@@ -26,6 +26,8 @@ class LinkedList{
         void printList() const;
         void removeAt(int index); 
 
+        bool isEmpty() const;
+
         LinkedList &operator=(const LinkedList & rhs);
         LinkedList &operator+=(const node & rhs);
         LinkedList operator+(const LinkedList & rhs) const;

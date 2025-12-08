@@ -1,16 +1,12 @@
 #include <iostream>
 #include <string>
-#include "LinkedList.h"
 #include <vector>
 #include <fstream>
-//#include <limits>
-
-using namespace std;
-#include <iostream>
-#include <string>
-#include <vector>
 #include <limits>
 #include "LinkedList.h"
+
+using namespace std;
+
 
 using namespace std;
 class person{
@@ -18,28 +14,31 @@ class person{
         string _name;
         string _pass;
         double totalBalance;
-        vector<LinkedList> *_lists;
+        vector<LinkedList> _lists;
     public:
-        person():_name(""),_pass(""),totalBalance(0.0),_lists(nullptr){}
-        person(string n,string p, double b, vector<LinkedList> *l):
+        person():_name(""),_pass(""),totalBalance(0.0),_lists(){}
+        person(string n, string s):_name(n),_pass(s),totalBalance(0.0),_lists(){}
+        person(string n,string p, double b, vector<LinkedList> l):
         _name(n),_pass(p),totalBalance(b),_lists(l){}
 
         string getName() const{return _name;}
         string getPass() const{return _pass;}
         double getBalance() const{return totalBalance;}
 
-        void setList(vector<LinkedList> *l){_lists = l;}
+        void setList(vector<LinkedList> l){_lists = l;}
         bool isValid() const{return !_name.empty() && !_pass.empty();}
-        vector<LinkedList> &getList(){return *_lists;}
+        vector<LinkedList> &getList(){return _lists;}
 
 };
 
-void manageList(vector<LinkedList> & lists){
+void manageList(vector<LinkedList> & lists, person &_curUser){
     int menu_ch;
-    for(int i = 0; i<lists.size();i++){
-        cout<<i+1<<". "<<lists[i].getListName()<<endl;
-    }
+    
     while(true){
+        cout<<"###### LISTS OF "<<_curUser.getName()<<" ######\n";
+        for(int i = 0; i<lists.size();i++){
+            cout<<i+1<<". "<<lists[i].getListName()<<endl;
+        }
         cout<<"####### MENU #######\n";
         cout<<"1. Add new stock to list\n";
         cout<<"2. Remove stock from list\n";
@@ -55,16 +54,20 @@ void manageList(vector<LinkedList> & lists){
             string stockName;
             double stockPrice;
             int ch;
-            //if(ch < lists.size()) continue;
+            
             cout<<"Choose list: ";
             cin>>ch;
+            if (ch < 1 || ch > (int)lists.size()) {
+                cout << "Invalid list choice!\n";
+                continue;
+            }
             cout<<"Enter stock name: ";
             cin >> stockName;
             cout<<"Enter buy price: ";
             cin >> stockPrice;
             stock s(stockName,stockPrice);
             lists[ch-1] += s;
-            cout<<"##################\n";
+            cout<<"--------------------\n";
             cout<<lists[ch-1];
         }
         else if(menu_ch == 2){
@@ -98,7 +101,7 @@ void getData(vector<person> &users){
     while(file >> _name >> _pass){
         cout<<". ";
         if(!_name.empty() && !_pass.empty()){
-            person p(_name,_pass,0.0,nullptr);
+            person p(_name,_pass);
             users.push_back(p);
             #ifdef _DEBUG
                 cout<<"New person: "<<_name<<" | password: "<<_pass<<endl;
@@ -111,6 +114,7 @@ void getData(vector<person> &users){
     file.close();
 }
 int main() {
+    system("chcp 65001 > nul"); //it is necesarry for stickers
     vector<LinkedList> lists;
     vector<person> users;
     
@@ -119,7 +123,7 @@ int main() {
     string pass, name;
     getData(users);
     while(true){
-        cout<<"##### FINANCE APP #####\n";
+        cout<<"------ FINANCE APP ------\n";
         cout<<"Enter name: ";
         cin>>name;
         cout<<"Enter password: ";
@@ -127,6 +131,7 @@ int main() {
         for(int i = 0; i<users.size();i++){
             if(name == users[i].getName() && pass == users[i].getPass()){
                 currentUser = users[i];
+                cout<<"Loged in successfully!\n";
                 #ifdef _DEBUG
                     cout<<"user with given information found.\n";
                 #endif
@@ -138,8 +143,6 @@ int main() {
             continue;
         }
         
-        vector<LinkedList> *lst = new vector<LinkedList>;
-        currentUser.setList(lst);
         break;
         
     }
@@ -176,7 +179,7 @@ int main() {
                 cout << "No list exists. Create one first.\n";
                 continue;
             }
-            manageList(currentUser.getList());
+            manageList(currentUser.getList(),currentUser);
         }
         else if (choice == 3){
             for(int i = 0; i<currentUser.getList().size(); i++){
@@ -197,8 +200,6 @@ int main() {
 
 
     /*
-    TODO: Check all functions are functional
-    TODO: Save lists datas to database or txt file 
     TODO: Improve terminal UI
     TODO: Add quantity to stocks and create user balance
     * Show also user name before printing lists
